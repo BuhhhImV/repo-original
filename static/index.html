@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarity | Legal Contract Simplifier</title>
+    <meta name="description" content="AI-powered contract simplifier. Upload an agreement, get a layman's summary, detect red flags, and ask questions.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="m9 12 2 2 4-4"/>
+                </svg>
+                <span>Clarity.ai</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#">Dashboard</a>
+                <a href="#">Settings</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <!-- Upload View -->
+            <section id="upload-view" class="view active">
+                <div class="hero">
+                    <h1 class="hero-title">Contracts, Demystified.</h1>
+                    <p class="hero-subtitle">Upload 100+ page legal documents. We'll summarize it for the layman, highlight red flags, and answer your questions securely powered by Gemini 1.5 Pro.</p>
+                </div>
+                
+                <div class="upload-card">
+                    <div class="upload-dropzone" id="dropzone">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        <p class="upload-prompt">Drag & drop your legal document here</p>
+                        <p class="upload-subprompt">PDF, DOCX accepted. Max 100MB.</p>
+                        <button class="btn btn-primary" id="browse-btn">Browse Files</button>
+                        <input type="file" id="file-input" hidden accept=".pdf,.docx,.doc,.txt">
+                    </div>
+                </div>
+
+                <div class="loading-state hidden" id="analyzing-state">
+                    <div class="spinner"></div>
+                    <p>Vertex AI is analyzing your document...</p>
+                </div>
+            </section>
+
+            <!-- Dashboard View -->
+            <section id="dashboard-view" class="view hidden">
+                <div class="dashboard-header">
+                    <h2>Document Analysis Result</h2>
+                    <button class="btn btn-secondary btn-small" id="new-doc-btn">Upload New</button>
+                </div>
+
+                <div class="dashboard-grid">
+                    
+                    <!-- Left Column: Summary & Red Flags -->
+                    <div class="analysis-column">
+                        <div class="card glass-card">
+                            <div class="card-header">
+                                <h3>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 3v5h5"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+                                    Layman's Summary
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <p id="summary-content" class="skeleton-text">Generating summary...</p>
+                            </div>
+                        </div>
+
+                        <div class="card glass-card warning">
+                            <div class="card-header">
+                                <h3 class="text-red">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    Critical Red Flags
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <ul id="red-flags-list" class="red-flags-list">
+                                    <!-- Populated by JS -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Q&A Chat -->
+                    <div class="chat-column">
+                        <div class="card glass-card chat-card">
+                            <div class="card-header">
+                                <h3>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                                    Ask the Document
+                                </h3>
+                            </div>
+                            <div class="chat-history" id="chat-history">
+                                <div class="message ai-message">
+                                    <div class="avatar ai-avatar">AI</div>
+                                    <div class="message-content">I've read the document completely. What specific questions do you have? (e.g., "Can my landlord enter without notice?")</div>
+                                </div>
+                            </div>
+                            <div class="chat-input-area">
+                                <form id="chat-form">
+                                    <input type="text" id="chat-input" placeholder="Ask anything about the contract..." required autocomplete="off">
+                                    <button type="submit" class="btn btn-primary send-btn">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>

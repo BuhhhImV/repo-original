@@ -1,0 +1,12 @@
+Residential Lease Agreement
+
+1. Term: This lease shall be for a term of 12 months, commencing on May 1, 2026.
+2. Rent: The tenant agrees to pay $2,000 per month.
+3. Security Deposit: A security deposit of $2,000 is required.
+4. Maintenance: 
+   4.a Landlord provides water.
+   4.b Landlord may terminate the lease with 7 days notice for minor infractions.
+5. Pets: No pets allowed without a $500 non-refundable fee.
+7.a The tenant waives their right to a jury trial in all potential disputes.
+9.d The tenant is strictly liable for all maintenance or repair costs up to $500 per incident.
+11. Right of Entry: Landlord may enter immediately without notice for emergencies. Otherwise, 24 hours written notice is required.
